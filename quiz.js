@@ -1,5 +1,4 @@
 import Question from "./Question.js"
-import question from "./Question.js";
 
 const baseUrl = "https://opentdb.com/api.php"
 

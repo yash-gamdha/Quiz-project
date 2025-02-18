@@ -33,7 +33,6 @@ fetch(
             }
             selectedCategory = categoryLabel
             selectedCategoryId = category.id
-            console.log(selectedCategoryId)
             selectedCategory.classList.add("category-hover-checked")
         })
 
@@ -44,31 +43,51 @@ fetch(
 })
 
 document.getElementById("start").addEventListener("click", () => {
-    let name = document.getElementById("name")
-    let noOfQues = document.getElementById("no_of_que")
+    const name = document.getElementById("name")
+    const noOfQues = document.getElementById("no_of_que")
+    const difficulty = document.getElementById("difficulty")
+    let okValidation = true
 
-    let nameRegex = /^[a-zA-Z\-]+$/g
+    let nameRegex = /^[a-zA-Z]+(?:\s+[a-zA-Z]+)*$/g
     if (name.value === '') {
         alert("Enter name")
+        okValidation = false
     } else {
         if (nameRegex.test(name.value)) {
             localStorage.setItem("name", name.value)
         } else {
             alert("Enter name properly")
+            okValidation = false
         }
     }
 
     if (noOfQues.value === '') {
-        localStorage.setItem("noOfQue", '10')
+        alert("Enter no of questions")
+        okValidation = false
     } else {
-        localStorage.setItem("noOfQue", noOfQues.value)
+        if (noOfQues.value < '1' || noOfQues.value > '50') {
+            alert("Invalid No. of questions")
+            okValidation = false
+        } else {
+            localStorage.setItem("noOfQue", noOfQues.value)
+        }
     }
 
     if (selectedCategoryId == null) {
         alert("select a category")
+        okValidation = false
     } else {
         localStorage.setItem("categoryId", selectedCategoryId.toString())
     }
 
-    window.location.href = "quiz.html"
+    if (difficulty.value === 'Select difficulty') {
+        alert("Select difficulty")
+        okValidation = false
+    } else {
+        localStorage.setItem("difficulty", difficulty.value)
+    }
+
+    if (okValidation) {
+        window.location.href = "quiz.html"
+    }
 })

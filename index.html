@@ -10,10 +10,10 @@
 
     <div class="content">
       <nav class="navbar display-flex flex-direction-row glass-morphism">
-        <div class="website_name fs-xx-large">Quizzz</div>
+        <div class="website_name fs-xx-large"><a href="./index.html" class="text-decor-none text-white">Quizzz</a></div>
         <div>
           <ul class="nav_items display-flex list-style-type-none fs-large">
-            <li><a class="text-decor-none" href="google.com">home</a></li>
+            <li><a class="text-decor-none active" href="./index.html">home</a></li>
             <li><a class="text-decor-none" href="google.com">about</a></li>
             <li><a class="text-decor-none" href="google.com">contact</a></li>
           </ul>
@@ -23,11 +23,20 @@
         <div class="details display-flex flex-direction-row align-items-center">
           <div>
             <label for="name" class="fs-medium text-white">Enter your name : </label>
-            <input type="text" name="name" id="name" placeholder="Ex. john doe" class="glass-morphism">
+            <input type="text" name="name" id="name" placeholder="Ex. Yash Gamdha" class="glass-morphism">
           </div>
           <div>
             <label for="no_of_que" class="fs-medium text-white">Enter No. of questions : </label>
-            <input type="number" class="glass-morphism" placeholder="Max: 50, Default: 10" max="50" min="10" step="1" name="name" id="no_of_que">
+            <input type="number" class="glass-morphism" placeholder="Min: 1, Max: 50" step="1" name="name" id="no_of_que">
+          </div>
+          <div>
+            <label for="difficulty" class="fs-medium text-white">Enter No. of questions : </label>
+            <select id="difficulty" class="glass-morphism">
+              <option disabled selected>Select difficulty</option>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
           </div>
         </div>
 
@@ -39,6 +48,6 @@
         </div>
       </div>
     </div>
-    <script src="./script.js"></script>
+    <script src="./index.js"></script>
   </body>
 </html>

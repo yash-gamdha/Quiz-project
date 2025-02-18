@@ -2,13 +2,31 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Quiz</title>
+        <title>Quizzz</title>
+        <link rel="stylesheet" href="./style.css">
     </head>
-    <body>
-        <script>
-            document.write(localStorage.getItem("name"))
-            document.write(localStorage.getItem("noOfQue"))
-            document.write(localStorage.getItem("categoryId"))
-        </script>
+    <body class="display-flex flex-wrap flex-direction-column justify-content-center align-items-center">
+        <div class="content">
+            <nav class="navbar display-flex flex-direction-row glass-morphism">
+                <div class="website_name fs-xx-large"><a href="./index.html" class="text-decor-none text-white">Quizzz</a></div>
+                <div>
+                    <ul class="nav_items display-flex list-style-type-none fs-large">
+                        <li><a class="text-decor-none active" href="./index.html">home</a></li>
+                        <li><a class="text-decor-none" href="google.com">about</a></li>
+                        <li><a class="text-decor-none" href="google.com">contact</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container display-flex flex-wrap flex-direction-column glass-morphism">
+                <!-- Container for questions -->
+                <div id="questions"></div>
+
+                <div class="display-flex justify-content-center">
+                    <button class="btn fs-medium" id="submitBtn">Submit</button>
+                </div>
+            </div>
+        </div>
+        <script src="./quiz.js" type="module"></script>
     </body>
 </html>

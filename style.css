@@ -40,7 +40,7 @@ body {
     justify-content: space-between;
 }
 
-#name, #no_of_que {
+#name, #no_of_que, #difficulty {
     border: none;
     margin-left: 10px;
     background: rgba(255,255,255,0.3);
@@ -50,6 +50,54 @@ body {
     &::placeholder {
         color: white;
     }
+}
+
+option {
+    background-color: rgba(0,0,0,0.3);
+    color: black;
+}
+
+.active {
+    position: relative;
+    &::after {
+        content: '';
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        top: 100%;
+        left: 0%;
+        background: white;
+    }
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+.custom-radio {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    display: inline-block;
+    position: relative;
+    background-color: white;
+    transition: background-color 0.3s ease, border 0.3s ease;
+    margin-right: 8px;
+}
+
+.options {
+    padding-left: 25px;
+}
+
+input[type="radio"]:checked + label .custom-radio {
+    background: rgba(255,255,255,0.1);
+    border-color: #bbb;
+    backdrop-filter: blur(20px);
 }
 
 .display-flex {
@@ -84,12 +132,31 @@ body {
     gap: 20px;
 }
 
+.fs-large {
+    font-size: large;
+}
+
+.fs-x-large {
+    font-size: x-large;
+}
+
 .fs-xx-large {
     font-size: xx-large;
 }
 
-.fs-large {
-    font-size: large;
+.question-container {
+    color: white;
+}
+
+.options {
+    padding-top: 20px;
+}
+
+.options > label {
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    align-items: center;
 }
 
 .fs-medium {
@@ -154,4 +221,10 @@ li > a {
     cursor: pointer;
     background: rgba(255,255,255,0.1);
     backdrop-filter: blur(40px);
+}
+
+@media screen and (max-width: 768px){
+    .navbar {
+        flex-direction: column;
+    }
 }

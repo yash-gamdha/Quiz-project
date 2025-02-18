@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Quizzz</title>
+  </head>
+  <body class="display-flex flex-wrap flex-direction-column justify-content-center align-items-center">
+
+    <div class="content">
+      <nav class="navbar display-flex flex-direction-row glass-morphism">
+        <div class="website_name fs-xx-large">Quizzz</div>
+        <div>
+          <ul class="nav_items display-flex list-style-type-none fs-large">
+            <li><a class="text-decor-none" href="google.com">home</a></li>
+            <li><a class="text-decor-none" href="google.com">about</a></li>
+            <li><a class="text-decor-none" href="google.com">contact</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container display-flex flex-wrap flex-direction-column glass-morphism">
+        <div class="details display-flex flex-direction-row align-items-center">
+          <div>
+            <label for="name" class="fs-medium text-white">Enter your name : </label>
+            <input type="text" name="name" id="name" placeholder="Ex. john doe" class="glass-morphism">
+          </div>
+          <div>
+            <label for="no_of_que" class="fs-medium text-white">Enter No. of questions : </label>
+            <input type="number" class="glass-morphism" placeholder="Max: 50, Default: 10" max="50" min="10" step="1" name="name" id="no_of_que">
+          </div>
+        </div>
+
+        <!-- container for categories -->
+        <div class="categories display-flex flex-wrap flex-direction-row align-items-center justify-content-center"></div>
+
+        <div class="display-flex justify-content-center">
+          <button class="btn fs-medium" id="start">Start Quiz</button>
+        </div>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -65,8 +65,8 @@ document.getElementById("start").addEventListener("click", () => {
         alert("Enter no of questions")
         okValidation = false
     } else {
-        if (noOfQues.value < '1' || noOfQues.value > '50') {
-            alert("Invalid No. of questions")
+        if (parseInt(noOfQues.value) < 1 || parseInt(noOfQues.value) > 50) {
+            alert("Invalid No. of questions" + noOfQues.value)
             okValidation = false
         } else {
             localStorage.setItem("noOfQue", noOfQues.value)

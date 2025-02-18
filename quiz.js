@@ -41,14 +41,12 @@ fetch(
 function addQuestions() {
     if (questionsFromAPI != null) {
         questionsFromAPI.forEach((question, index) => {
-            console.log(question.answer)
             const questionsContainer = document.createElement("div")
             questionsContainer.classList.add("question-container")
 
             const questionDiv = document.createElement("div")
             questionDiv.classList.add("question", "fs-x-large")
             questionDiv.innerHTML = `${index + 1}. ${question.question}`
-            // console.log(questionDiv.innerHTML)
 
             questionsContainer.appendChild(questionDiv)
 

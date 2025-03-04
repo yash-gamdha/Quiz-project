@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign up or log in</title>
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body class="bg-gray-200 min-h-svh h-auto overflow-hidden">
+        <div class="flex flex-col items-center justify-center mb-12">
+            <div class="fragment-buttons inconsolata-bold bg-fragment h-auto flex p-2 mt-2 snap-x-mandatory w-10/12 lg:w-7/12 rounded-2xl relative">
+                <span class="fragment-button w-1/2 text-center z-10 cursor-pointer snap-align-center">Sign Up</span>
+                <span class="fragment-button w-1/2 text-center z-10 cursor-pointer snap-align-center">Log In</span>
+                <span class="h-10/12 bg-gray-200 w-1/2 m-1 rounded-2xl absolute top-0 -translate-x-full left-1/2 translate-y-0" id="selected"></span>
+            </div>
+            <div class="fragments bg-fragment h-auto flex overflow-x-hidden snap-x-mandatory w-10/12 lg:w-7/12 rounded-2xl">
+                <span class="fragment w-full shrink-0 snap-align-center">
+                    <form method="POST" id="sign-up-form" class="inconsolata-normal">
+                        <!-- Username Field -->
+                        <div class="mb-4">
+                            <label for="username" class="block text-gray-700">Username</label>
+                            <input type="text" placeholder="Ex. user123" id="username" name="username" class="w-full p-2 border border-gray-300 rounded-md mt-2">
+                            <p class="text-xs text-gray-500 mt-1">Username should be at least 6 characters.</p>
+                            <p class="text-xs text-red-400 mt-1 hidden" id="un_error"></p>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700">Email</label>
+                            <input type="email" placeholder="exmaple@gmail.com" id="email" name="email" class="w-full p-2 border border-gray-300 rounded-md mt-2">
+                            <p class="text-xs text-red-400 mt-1 hidden" id="email_error"></p>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-4">
+                            <label for="password" class="block text-gray-700">Password</label>
+                            <div class="relative">
+                                <input type="password" placeholder="create a strong password" id="password" name="password" class="w-full relative p-2 border border-gray-300 rounded-md mt-2">
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Password should be at least 8 characters.</p>
+                            <p class="text-xs text-red-400 mt-1 hidden" id="pw_error"></p>
+                        </div>
+
+                        <!-- Confirm Password Field -->
+                        <div class="mb-4">
+                            <label for="confirm-password" class="block text-gray-700">Confirm Password</label>
+                            <input type="password" placeholder="should be same as password field" id="confirm-password" name="confirm-password" class="w-full p-2 border border-gray-300 rounded-md mt-2">
+                            <p class="text-xs text-red-400 mt-1 hidden" id="cpw_error"></p>
+                        </div>
+
+                        <p class="text-base text-red-400 mt-1 text-center hidden" id="sign_up_error"></p>
+                        <p class="text-base text-green-400 mt-1 text-center hidden" id="sign_up_success">Account created successfully. Please log in.</p>
+
+                        <!-- Submit Button -->
+                        <div class="flex justify-center mt-4">
+                            <button type="submit" id="sign_up_btn" class="w-fit px-4 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300 cursor-pointer">Sign Up</button>
+                        </div>
+                    </form>
+                </span>
+                <span class="fragment w-full shrink-0 snap-align-center">
+                    <form method="POST" id="log-in-form" class="inconsolata-normal">
+                        <!-- Username Field -->
+                        <div class="mb-4">
+                            <label for="log_in_un" class="block text-gray-700">Username</label>
+                            <input type="text" placeholder="Enter your username" id="log_in_un" name="username" class="w-full p-2 border border-gray-300 rounded-md mt-2">
+                            <p class="text-base text-red-400 mt-1 text-center hidden" id="log_un_error"></p>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-4">
+                            <label for="log_in_pw" class="block text-gray-700">Password</label>
+                            <input type="password" placeholder="Enter your password" id="log_in_pw" name="password" class="w-full p-2 border border-gray-300 rounded-md mt-2">
+                            <p class="text-base text-red-400 mt-1 text-center hidden" id="log_pw_error"></p>
+                        </div>
+                        <p class="text-base text-red-400 mt-1 text-center hidden" id="log_in_error"></p>
+
+                        <!-- Submit Button -->
+                        <div class="flex justify-center mt-4">
+                            <button type="submit" id="log_in_btn" class="w-fit px-4 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300 cursor-pointer">Log In</button>
+                        </div>
+                    </form>
+                </span>
+            </div>
+        </div>
+        <script src="./auth.js" type="module"></script>
+    </body>
+</html>

@@ -1,7 +1,10 @@
 class Question {
-    constructor(question, answer, options) {
+    constructor(question, answer, category, difficulty, type, options) {
         this.question = question;
         this.answer = answer;
+        this.category = category;
+        this.difficulty = difficulty;
+        this.type = type;
         this.options = this.getOptions(options, this.answer)
         this.isCorrect = false
     }

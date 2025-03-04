@@ -1,91 +1,127 @@
-import Question from "./Question.js"
+import Question from "./Question.js";
 
 const baseUrl = "https://opentdb.com/api.php"
 
-const username = localStorage.getItem("name")
 const noOfQue = localStorage.getItem("noOfQue")
 const categoryId = localStorage.getItem("categoryId")
 const difficulty = localStorage.getItem("difficulty")
+const isRandom = localStorage.getItem("isRandom")
 
-const questionsHTML = document.getElementById("questions")
-let questionIdForRadio = 0
-let score = 0
+let questionsFromAPI = null;
+let currentQuestionIndex = 0;
+let correctAnswerIndex = 0;
 
-let questionsFromAPI = null
+const categoryNameHTML = document.getElementById("category_name");
+const difficultyHTML = document.getElementById("difficulty");
+const questionHTML = document.getElementById("question");
+const options = [
+    document.getElementById("option1"),
+    document.getElementById("option2"),
+    document.getElementById("option3"),
+    document.getElementById("option4"),
+]
+const finalScoreHTML = document.getElementById("final_score");
+const homeTakerHTML = document.getElementById("home_taker");
+const nextHTML = document.getElementById("next");
+
+homeTakerHTML.addEventListener("click", () => {
+    window.location.href = "index.html";
+})
+
+nextHTML.addEventListener("click", () => {
+    currentQuestionIndex = currentQuestionIndex + 1;
+    playQuiz()
+})
+
+const url = (isRandom === "true") ?
+    `${baseUrl}?amount=${Math.floor(Math.random() * 50)}`
+    : `${baseUrl}?amount=${noOfQue}&category=${categoryId}&difficulty=${difficulty}`
 
 fetch(
-    `${baseUrl}?amount=${noOfQue}&category=${categoryId}&difficulty=${difficulty}`,
+    url,
     {
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
+        method: "GET",
+        headers: {
+            "Accept": "application/json"
         }
-).then((response) => {
-    return response.json()
-}).then((questionsList) => {
-    questionsFromAPI = questionsList.results.map(question => {
+    }
+).then(response => response.json())
+.then(data => {
+    questionsFromAPI = data.results.map((question) => {
         return new Question(
             question.question,
             question.correct_answer,
+            question.category,
+            question.difficulty,
+            question.type,
             question.incorrect_answers
         )
     })
 
-    addQuestions()
-}).catch((error) => {
-    console.log(error)
-})
+    playQuiz();
+}).catch(error => console.log(error))
 
-function addQuestions() {
-    if (questionsFromAPI != null) {
-        questionsFromAPI.forEach((question, index) => {
-            const questionsContainer = document.createElement("div")
-            questionsContainer.classList.add("question-container")
-
-            const questionDiv = document.createElement("div")
-            questionDiv.classList.add("question", "fs-x-large")
-            questionDiv.innerHTML = `${index + 1}. ${question.question}`
-
-            questionsContainer.appendChild(questionDiv)
-
-
-            const options = document.createElement("div")
-            options.classList.add("options")
-
-            question.options.forEach(option => {
-                const radio = document.createElement("input")
-                radio.setAttribute("type", "radio")
-                radio.setAttribute("name", `Question${index + 1}`)
-                radio.setAttribute("id", `${questionIdForRadio}`)
-
-                const label = document.createElement("label")
-                label.setAttribute("for", `${questionIdForRadio}`)
-                label.innerHTML = `<span class="custom-radio"></span>${option}`
-
-                label.addEventListener("click", () => {
-                    question.isCorrect = label.innerText === question.answer;
-                })
-
-                options.appendChild(radio)
-                options.appendChild(label)
-
-                questionIdForRadio++
-            })
-
-            questionsContainer.appendChild(options)
-            questionsHTML.appendChild(questionsContainer)
-        })
+function playQuiz() {
+    if (currentQuestionIndex === questionsFromAPI.length) {
+        calculateScore();
+        return;
     }
-}
 
-document.getElementById("submitBtn").addEventListener("click", () => {
-    if (questionsFromAPI != null) {
-        questionsFromAPI.forEach(question => {
-            if (question.isCorrect) {
-                score++
+    options.forEach(option => option.children[0].checked = false)
+
+    difficultyHTML.innerText = questionsFromAPI[currentQuestionIndex].difficulty;
+    questionHTML.innerHTML = `${currentQuestionIndex + 1}. ${questionsFromAPI[currentQuestionIndex].question}`;
+    categoryNameHTML.innerText = questionsFromAPI[currentQuestionIndex].category;
+
+    if (questionsFromAPI[currentQuestionIndex].type === "boolean") {
+        options[2].classList.add("hidden")
+        options[3].classList.add("hidden")
+    } else {
+        options[2].classList.remove("hidden")
+        options[3].classList.remove("hidden")
+    }
+
+    questionsFromAPI[currentQuestionIndex].options.forEach((option, index) => {
+        options[index].classList.remove("text-white")
+        options[index].classList.add("text-gray-700")
+        options[index].classList.remove("bg-green-400")
+        options[index].classList.remove("bg-red-400")
+
+        options[index].children[2].innerText = option;
+
+        if (option === questionsFromAPI[currentQuestionIndex].answer) {
+            correctAnswerIndex = index;
+        }
+
+        options[index].addEventListener("click", () => {
+            questionsFromAPI[currentQuestionIndex].isCorrect = options[index].innerText === questionsFromAPI[currentQuestionIndex].answer;
+
+            options[index].classList.remove("text-gray-700")
+            options[index].classList.add("text-white")
+            options[index].children[1].classList.add("peer-checked:border-white")
+
+            if (questionsFromAPI[currentQuestionIndex].isCorrect) {
+                options[index].classList.add("bg-green-400")
+            } else {
+                options[correctAnswerIndex].classList.add("bg-green-400")
+                options[correctAnswerIndex].classList.add("text-white")
+                options[index].classList.add("bg-red-400")
             }
         })
-    }
-    console.log(score)
-})
+    })
+}
+
+function calculateScore() {
+    let score = 0
+
+    questionsFromAPI.forEach(question => {
+        if (question.isCorrect) {
+            score++;
+        }
+    })
+
+    finalScoreHTML.innerText = score.toString();
+    document.getElementById("result").classList.remove("hidden");
+    homeTakerHTML.classList.remove("hidden");
+    nextHTML.classList.add("hidden");
+}

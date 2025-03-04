@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Quizzz</title>
+        <link rel="stylesheet" href="./style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body class="bg-gray-200 min-h-svh h-auto">
+        <div class="flex justify-center">
+            <!-- navbar -->
+            <nav class="w-full lg:w-10/12 p-4 out mt-8 bg-none flex justify-center items-center py-4 bg-white rounded-none lg:rounded-2xl">
+                <div class="flex justify-center lg:justify-between w-full max-w-screen-xl">
+                    <div class="name inconsolata-bold text-5xl ms-4">Quizzz</div>
+                    <ul class="inconsolata-normal flex gap-4 items-center list-none navbar rounded-2xl bg-white shadow lg:shadow-none fixed top-11/12 lg:static">
+                        <li class="hover:cursor-pointer nav-item" tabindex="2">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8 8-3.59 8-8-3.59-8-8-8zm1 13h-2v-6h2v6zm0-8h-2V7h2v2z" opacity=".3"/><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                            <p class="inline">About</p>
+                        </li>
+                        <li class="hover:cursor-pointer nav-item active" tabindex="1">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z"/><path d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" opacity=".3"/></svg>
+                            <p class="inline">Home</p>
+                        </li>
+                        <li class="hover:cursor-pointer nav-item" tabindex="3">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M20 4h-5.5l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5zM5.41 4L4 5.41l5.17 5.17 1.42-1.41zM20 20v-5.5l-2.04 2.04-3.13-3.13-1.41 1.41 3.13 3.13L14.5 20z"/></svg>
+                            <p class="inline">Random</p>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- Fragments -->
+        <div class="flex justify-center mb-12">
+            <div class="fragments bg-fragment h-auto flex overflow-x-hidden snap-x-mandatory w-full lg:w-10/12 lg:rounded-2xl">
+                <span class="fragment w-full shrink-0 snap-align-center">
+                    <div class="about-fragment flex flex-col gap-y-4 inconsolata-normal">
+                        <div class="text-xl lg:text-3xl">About <b>Quizzz</b></div>
+                        <div class="text-base lg:text-xl">
+                            Welcome to <b>Quizzz</b>, the ultimate destination for quiz enthusiasts! Whether you're a trivia master or just looking to challenge yourself, we have something for everyone. At Quizzz, we offer a fun, interactive, and engaging way to test your knowledge on a wide range of topics, from general knowledge to niche subjects.
+                        </div>
+                        <hr>
+                        <div class="inconsolata-bold text-xl lg:text-3xl">What we offer</div>
+                        <div class="text-base lg:text-xl">
+                            <ul>
+                                <li>⇒ <b>Various Topics:</b> Choose from an extensive list of categories including History, Science, Sports, Geography, Movies, Music, Literature, and more. With a constantly growing selection, there's always something new to discover!</li>
+                                <li>⇒ <b>Multiple Difficulty Levels:</b> Whether you're a beginner or an expert, our quizzes are designed for all levels. Pick your desired difficulty – Easy, Medium, or Hard – and start testing your knowledge.</li>
+                                <li>⇒ <b>Random Quizzes:</b> Feeling adventurous? Take a random quiz and challenge yourself with topics and difficulty levels you might not have considered before.</li>
+                                <li>⇒ <b>Timed Challenges:</b> Want to race against the clock? Our timed quizzes will push you to answer quickly and efficiently.</li>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="inconsolata-bold text-xl lg:text-3xl">Developer Info</div>
+                        <div class="text-base lg:text-xl">
+                            <span><b>Developed By:</b>&nbsp;Yash Gamdha</span><br>
+                            <a href="https://github.com/yash-gamdha">Github</a>
+                        </div>
+                    </div>
+                </span>
+                <span class="fragment w-full shrink-0 snap-align-center">
+                    <div class="flex flex-col items-center gap-y-6">
+                        <div class="inconsolata-bold text-3xl">Categories</div>
+                        <!-- categories container -->
+                        <div class="categories flex flex-row flex-wrap justify-center gap-3"></div>
+                        <div id="category-not-selected" class="hidden text-red-600 transition-all"></div>
+                        <button id="next" class="bg-blue-500 hover:bg-blue-700 mt-12 text-white inconsolata-normal text-2xl py-2 px-4 rounded cursor-pointer">Next</button>
+                    </div>
+                </span>
+                <span class="fragment w-full shrink-0 snap-align-center">
+                    <div class="flex flex-col items-center gap-y-6">
+                        <div class="inconsolata-bold text-xl lg:text-3xl">Play randomly 🔀</div>
+                        <div class="text-base lg:text-lg inconsolata-normal">
+                            Feeling adventurous? Take a random quiz and challenge yourself with topics and difficulty levels you might not have considered before.
+                        </div>
+                        <button id="startRandom" class="bg-blue-500 hover:bg-blue-700 mt-12 text-white inconsolata-normal text-2xl py-2 px-4 rounded cursor-pointer">Start</button>
+                    </div>
+                </span>
+            </div>
+        </div>
+
+        <!-- Custom dialog box -->
+        <div id="custom-dialog-box" class="fixed inset-0 flex justify-center items-center hidden">
+            <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                <!-- Close button -->
+                <button id="dialog-close-btn" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 cursor-pointer">
+                    <span class="text-5xl">&times;</span>
+                </button>
+                <!-- Dialog content -->
+                <div class="text-center flex flex-col justify-center items-start gap-y-3">
+                    <div>
+                        <label for="noOfQue">Enter no of Questions : </label>
+                        <input type="number" name="noOfQue" id="noOfQue" class="rounded-sm placeholder:text-gray-500 focus:ring-1 focus:ring-blue-500 text-base outline-none text-gray-700 py-1 px-3 duration-200 ease-in-out" placeholder="Min: 10, Max: 50">
+                        <div id="noOfQue-error" class="text-red-600 transition-all hidden"></div>
+                    </div>
+                    <div>
+                        <label for="difficulty-dropdown">Enter no of Questions : </label>
+                        <select name="diff-dropdown" id="difficulty-dropdown" class="rounded-sm placeholder:text-gray-500 focus:ring-1 focus:ring-blue-500 text-base outline-none text-gray-700">
+                            <option selected disabled>Select Difficulty</option>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                        <div id="difficulty-error" class="text-red-600 transition-all hidden"></div>
+                    </div>
+                    <div class="flex flex-row justify-center items-center w-full">
+                        <button id="start" class="w-fit bg-blue-500 hover:bg-blue-700 text-white inconsolata-normal text-2xl py-2 px-4 rounded cursor-pointer">Start</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="./script.js"></script>
+    </body>
+</html>

@@ -2,43 +2,68 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Quizzz</title>
+        <title>Quiz</title>
         <link rel="stylesheet" href="./style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body class="display-flex flex-wrap flex-direction-column justify-content-center align-items-center">
-        <div class="content">
-            <nav class="navbar display-flex flex-direction-row glass-morphism">
-                <div class="website_name fs-xx-large"><a href="./index.html" class="text-decor-none text-white">Quizzz</a></div>
-                <div>
-                    <ul class="nav_items display-flex list-style-type-none fs-large">
-                        <li><a class="text-decor-none active" href="./index.html">home</a></li>
-                        <li><a class="text-decor-none" href="google.com">about</a></li>
-                        <li><a class="text-decor-none" href="google.com">contact</a></li>
-                    </ul>
+    <body>
+        <div class="flex flex-col items-center justify-center min-h-screen h-auto">
+            <div class="relative bg-white shadow-xl p-6 max-w-4xl rounded-2xl overflow-hidden">
+                <div class="absolute -top-3 -left-4 bg-gray-300 text-black font-bold px-3 py-3 w-auto h-12 flex justify-center items-center text-center rounded-br-2xl shadow-md">
+                    Category&nbsp;:&nbsp;<span id="category_name"></span>
                 </div>
-            </nav>
 
-            <div class="container display-flex flex-wrap flex-direction-column glass-morphism">
-                <!-- Container for questions -->
-                <div id="questions"></div>
+                <div class="flex flex-col md:flex-row items-center mt-5">
+                    <div class="relative w-full md:w-1/2">
+                        <div class="w-full">
+                            <p class="break-all whitespace-normal text-xl lg:text-2xl" id="question"></p>
+                        </div>
+                    </div>
 
-                <div class="display-flex justify-content-center">
-                    <button class="btn fs-medium" id="submitBtn">Submit</button>
+                    <div class="w-full md:w-1/2 p-6 relative">
+                        <div class="flex flex-col lg:items-end space-y-3 options overflow-auto">
+                            <!-- Option 1 -->
+                            <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-md text-gray-700" id="option1">
+                                <input type="radio" name="customRadio" value="option1" class="hidden peer" />
+                                <div class="w-5 h-5 rounded-full border-2 border-gray-400 peer-checked:bg-white transition"></div>
+                                <span>Option 1</span>
+                            </label>
+
+                            <!-- Option 2 -->
+                            <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-md text-gray-700" id="option2">
+                                <input type="radio" name="customRadio" value="option2" class="hidden peer" />
+                                <div class="w-5 h-5 rounded-full border-2 border-gray-400 peer-checked:bg-white transition"></div>
+                                <span>Option 1</span>
+                            </label>
+
+                            <!-- Option 3 -->
+                            <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-md text-gray-700" id="option3">
+                                <input type="radio" name="customRadio" value="option3" class="hidden peer" />
+                                <div class="w-5 h-5 rounded-full border-2 border-gray-400 peer-checked:bg-white transition"></div>
+                                <span>Option 1</span>
+                            </label>
+
+                            <!-- Option 4 -->
+                            <label class="flex items-center space-x-3 cursor-pointer p-2 rounded-md text-gray-700" id="option4">
+                                <input type="radio" name="customRadio" value="option3" class="hidden peer" />
+                                <div class="w-5 h-5 rounded-full border-2 border-gray-400 peer-checked:bg-white transition"></div>
+                                <span>Option 1</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-5"></div>
+                <div class="absolute -bottom-4 -right-4 bg-gray-300 text-black font-semibold px-6 py-3 w-60 h-16 flex justify-center items-center text-center rounded-tl-2xl shadow-md">
+                    difficulty&nbsp;:&nbsp;<span id="difficulty"></span>
                 </div>
             </div>
+            <button id="next" class="w-fit bg-gray-400 hover:bg-gray-600 text-white inconsolata-normal rounded-2xl text-2xl py-2 px-4 cursor-pointer mt-5">Next</button>
+
+            <div id="result" class="m-5 hidden">
+                You Scored&nbsp;:&nbsp;<span id="final_score"></span>
+            </div>
+            <button id="home_taker" class="w-fit hidden bg-blue-500 hover:bg-blue-700 text-white inconsolata-normal text-2xl py-2 px-4 rounded cursor-pointer mt-5">Go to home</button>
         </div>
         <script src="./quiz.js" type="module"></script>
-
-        <!-- vercel analytics code -->
-        <script>
-            window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-        </script>
-        <script defer src="/_vercel/insights/script.js"></script>
-
-        <!-- vercel speed insight code -->
-        <script>
-            window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-        </script>
-        <script defer src="/_vercel/speed-insights/script.js"></script>
     </body>
 </html>

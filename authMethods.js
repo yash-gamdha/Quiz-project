@@ -1,5 +1,5 @@
 async function signUp(username, email, password) {
-    const url = "https://simple-auth-project-latest.onrender.com/api/signup"
+    const url = "https://simpleauthproject-production.up.railway.app/api/signup"
 
     const body = {
         "username": username,
@@ -30,7 +30,7 @@ async function signUp(username, email, password) {
 }
 
 async function login(username, password) {
-    const url = "https://simple-auth-project-latest.onrender.com/api/login";
+    const url = "https://simpleauthproject-production.up.railway.app/api/login";
 
     const body = {
         "username": username,
@@ -59,7 +59,7 @@ async function login(username, password) {
 }
 
 async function deleteAccount(username, password) {
-    const url = "https://simple-auth-project-latest.onrender.com/api/remove"
+    const url = "https://simpleauthproject-production.up.railway.app/api/remove"
 
     const body = {
         "username": username,

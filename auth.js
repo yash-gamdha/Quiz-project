@@ -135,7 +135,7 @@ logInBtn.addEventListener("click", () => {
         } else {
             if (response.username !== null) {
                 // window.location.href = "./main.html";
-                window.open("http://localhost:63342/Quiz-project/main.html", "_blank")
+                window.open("https://quiz-project-js.vercel.app/main.html", "_blank")
             }
         }
     });

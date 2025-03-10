@@ -1,4 +1,4 @@
-async function signUp(username, email, password) {
+function signUp(username, email, password, callback) {
     const url = "https://simpleauthproject-production.up.railway.app/api/signup"
 
     const body = {
@@ -20,16 +20,16 @@ async function signUp(username, email, password) {
         );
 
         if (response.status === 200) {
-            return await response.text()
+            callback(response.text(), false)
         } else {
-            return await response.json().message;
+            callback(response.json().message, true);
         }
     } catch (error) {
         return error.message;
     }
 }
 
-async function login(username, password) {
+function login(username, password, callback) {
     const url = "https://simpleauthproject-production.up.railway.app/api/login";
 
     const body = {
@@ -38,7 +38,7 @@ async function login(username, password) {
     };
 
     try {
-        const response = await fetch(url, {
+        const response = fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -47,18 +47,20 @@ async function login(username, password) {
         });
 
         if (response.status === 200) {
-            const data = await response.json();  // Parse the JSON
-            return data.username;  // Return the username
+            callback(response.json(), false)
+            const data = response.json();  // Parse the JSON
+            console.log(data)
+            setCookie("username", data.username, 30);
         } else {
-            const errMessage = await response.json();
-            return errMessage.message;
+            const errMessage = response.json();
+            callback(errMessage.message, true);
         }
     } catch (error) {
         return error.message;  // Return error message if something goes wrong
     }
 }
 
-async function deleteAccount(username, password) {
+function deleteAccount(username, password, callback) {
     const url = "https://simpleauthproject-production.up.railway.app/api/remove"
 
     const body = {
@@ -70,7 +72,7 @@ async function deleteAccount(username, password) {
         const response = fetch(
             url,
             {
-                method: "POST",
+                method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -79,11 +81,50 @@ async function deleteAccount(username, password) {
         );
 
         if (response.status === 200) {
-            return await response.text();
+            console.log("hello")
+            deleteCookie("username");
+            callback(response.text(), false);
         }
     } catch (error) {
-        return error.message;
+        callback(error.message, true);
     }
 }
 
-export { signUp, login, deleteAccount }
+// cookie functions
+function setCookie(cname, cValue, exDays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exDays * 24 * 60 * 60 * 1000));
+    let expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cValue + ";" + expires + ";path=/";
+}
+
+function deleteCookie(cname) {
+    document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let ca = document.cookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function checkCookie(cname) {
+    let cookieValue = getCookie(cname);
+
+    if (cookieValue !== "") {
+        return cookieValue;
+    }
+
+    return false;
+}
+
+export { signUp, login, deleteAccount, getCookie, checkCookie, deleteCookie }

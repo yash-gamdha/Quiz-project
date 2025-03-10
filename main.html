@@ -10,8 +10,34 @@
         <div class="flex justify-center">
             <!-- navbar -->
             <nav class="w-full lg:w-10/12 p-4 out mt-8 bg-none flex justify-center items-center py-4 bg-white rounded-none lg:rounded-2xl">
-                <div class="flex justify-center lg:justify-between w-full max-w-screen-xl">
+                <div class="flex justify-center items-center lg:justify-between w-full max-w-screen-xl">
                     <div class="name inconsolata-bold text-5xl ms-4">Quizzz</div>
+                    <span class="w-full lg:hidden"></span>
+<!--                    <div class="text-3xl w-fit whitespace-nowrap"><span class="inconsolata-normal text-right">Welcome </span><span class="inconsolata-bold text-right" id="username"></span></div>-->
+                    <!--username with context menu - center on lg, right on smaller screens-->
+                    <div class="text-3xl w-fit whitespace-nowrap lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 relative">
+                        <span class="inconsolata-normal">Welcome </span>
+                        <span class="inconsolata-bold hover:cursor-pointer" id="username" onclick="toggleContextMenu()"></span>
+
+                        <!-- Context menu (hidden by default) -->
+                        <div id="contextMenu" class="absolute right-0 lg:right-auto lg:left-1/2 lg:-translate-x-1/2 mt-2 w-48 bg-white rounded-lg shadow-lg z-50 hidden">
+                            <ul class="py-2 text-base">
+                                <li class="px-4 py-2 hover:bg-gray-100 flex items-center cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                    Log Out
+                                </li>
+                                <li class="px-4 py-2 hover:bg-red-100 text-red-600 flex items-center cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                    Delete Account
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <span class="w-full"></span>
                     <ul class="inconsolata-normal flex gap-4 items-center list-none navbar rounded-2xl bg-white shadow lg:shadow-none fixed top-11/12 lg:static">
                         <li class="hover:cursor-pointer nav-item" tabindex="2">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 4c-4.41 0-8 3.59-8 8s3.59 8 8 8 8-3.59 8-8-3.59-8-8-8zm1 13h-2v-6h2v6zm0-8h-2V7h2v2z" opacity=".3"/><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
@@ -92,7 +118,7 @@
                         <div id="noOfQue-error" class="text-red-600 transition-all hidden"></div>
                     </div>
                     <div>
-                        <label for="difficulty-dropdown">Enter no of Questions : </label>
+                        <label for="difficulty-dropdown">Select Difficulty : </label>
                         <select name="diff-dropdown" id="difficulty-dropdown" class="rounded-sm placeholder:text-gray-500 focus:ring-1 focus:ring-blue-500 text-base outline-none text-gray-700">
                             <option selected disabled>Select Difficulty</option>
                             <option value="easy">Easy</option>
@@ -107,6 +133,47 @@
                 </div>
             </div>
         </div>
-        <script src="./script.js"></script>
+
+        <!-- Custom dialog box -->
+        <div id="custom-dialog-box-delete-acc" class="fixed inset-0 flex justify-center items-center hidden">
+            <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                <!-- Close button -->
+                <button id="dialog-close-btn-delete-acc" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 cursor-pointer">
+                    <span class="text-5xl">&times;</span>
+                </button>
+                <!-- Dialog content -->
+                <div class="text-center flex flex-col justify-center items-start gap-y-3">
+                    <div>
+                        <label for="delete-acc-pw">Enter Your Password to delete : </label>
+                        <input type="text" name="noOfQue" id="delete-acc-pw" class="rounded-sm placeholder:text-gray-500 focus:ring-1 focus:ring-blue-500 text-base outline-none text-gray-700 py-1 px-3 duration-200 ease-in-out" placeholder="Password">
+                    </div>
+                    <div class="flex flex-row justify-center items-center w-full">
+                        <button id="deleteAccBtn" class="w-fit bg-red-500 hover:bg-red-700 text-white inconsolata-normal text-2xl py-2 px-4 rounded cursor-pointer">Delete Account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="./script.js" type="module"></script>
+        <script>
+            function toggleContextMenu() {
+                const contextMenu = document.getElementById('contextMenu');
+                contextMenu.classList.toggle('hidden');
+            }
+
+            // Close context menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const username = document.getElementById('username');
+                const contextMenu = document.getElementById('contextMenu');
+
+                if (!username.contains(event.target) && !contextMenu.contains(event.target)) {
+                    contextMenu.classList.add('hidden');
+                }
+            });
+
+            // Prevent context menu from closing when clicking inside it
+            document.getElementById('contextMenu').addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        </script>
     </body>
 </html>

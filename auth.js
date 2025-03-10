@@ -39,7 +39,7 @@ function changeFragment(index, scrollBehavior = 'smooth') {
     }
 }
 
-signUpBtn.addEventListener("click", async () => {
+signUpBtn.addEventListener("click", () => {
     const username = document.getElementById("username")
     const email = document.getElementById("email")
     const password = document.getElementById("password")
@@ -97,20 +97,22 @@ signUpBtn.addEventListener("click", async () => {
     }
 
     // sign up function call
-    const response = await signUp(username.value, email.value, password.value);
-
-    if (response !== undefined && response != null) {
-        if (response === "success") {
-            signUpBtn.innerHTML = "Success";
-            signUpBtn.classList.add("bg-green-400");
-            document.getElementById("sign_up_success").classList.remove("hidden");
-        } else {
+    signUp(username.value, email.value, password.value, (response, isError) => {
+        if (isError) {
             showError(document.getElementById("sign_up_error"), response.message);
+        } else {
+            if (response !== undefined && response != null) {
+                if (response === "success") {
+                    signUpBtn.innerHTML = "Success";
+                    signUpBtn.classList.add("bg-green-400");
+                    document.getElementById("sign_up_success").classList.remove("hidden");
+                }
+            }
         }
-    }
+    });
 });
 
-logInBtn.addEventListener("click", async () => {
+logInBtn.addEventListener("click", () => {
     const username = document.getElementById("log_in_un");
     const password = document.getElementById("log_in_pw");
 
@@ -127,15 +129,16 @@ logInBtn.addEventListener("click", async () => {
     }
 
     // log in function call
-    const response = await login(username.value, password.value);
-
-    if (response !== undefined && response != null) {
-        if (response.username !== null) {
-            window.location.href = "./main.html";
-        } else {
+    login(username.value, password.value, (response, isError) => {
+        if (isError) {
             showError(document.getElementById("log_in_error"), "Invalid username or password");
+        } else {
+            if (response.username !== null) {
+                // window.location.href = "./main.html";
+                window.open("http://localhost:63342/Quiz-project/main.html", "_blank")
+            }
         }
-    }
+    });
 });
 
 function showError(domElement, errorMessage) {

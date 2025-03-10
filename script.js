@@ -1,11 +1,50 @@
+import {checkCookie, deleteAccount, deleteCookie} from "./authMethods.js";
+
 const baseUrl = "https://opentdb.com/"
 
 let currentFragment = document.querySelector(".active")
 const fragments = document.querySelectorAll(".fragment")
 const fragmentWrapper = document.querySelector(".fragments")
 
+const deleteAccDialog = document.getElementById("custom-dialog-box-delete-acc");
+document.getElementById("dialog-close-btn-delete-acc").addEventListener("click", () => {
+    deleteAccDialog.classList.add("hidden")
+})
+
 document.addEventListener("DOMContentLoaded", () => {
     changeFragment(1, "instant")
+    const cookieValue = checkCookie("username")
+    if (cookieValue !== false) {
+        document.getElementById("username").innerText = cookieValue;
+    } else {
+        window.location.href = "auth.html";
+    }
+    const contextMenu = document.getElementById("contextMenu");
+    const [...menuOptions] = contextMenu.children[0].children;
+    menuOptions[0].addEventListener("click", e => {
+        deleteCookie("username");
+        if (document.cookie === "") {
+            window.location.href = "auth.html";
+        }
+    });
+
+    menuOptions[1].addEventListener("click", e => {
+        deleteAccDialog.classList.remove("hidden");
+    });
+
+    document.getElementById("deleteAccBtn").addEventListener("click", () => {
+        deleteAccount(cookieValue, document.getElementById("delete-acc-pw").value, (response, isError) => {
+            if (!isError) {
+                if (response.toLowerCase() === "success") {
+                    alert("Account deleted successfully")
+                } else {
+                    alert("Failed to delete account")
+                }
+            } else {
+                alert("Something went wrong")
+            }
+        })
+    });
 })
 
 const categories = document.querySelector(".categories")
@@ -47,6 +86,26 @@ function changeFragment(index, scrollBehavior = 'smooth') {
         }
     )
 }
+
+function toggleContextMenu() {
+    const contextMenu = document.getElementById('contextMenu');
+    contextMenu.classList.toggle('hidden');
+}
+
+// Close context menu when clicking outside
+document.addEventListener('click', function(event) {
+    const username = document.getElementById('username');
+    const contextMenu = document.getElementById('contextMenu');
+
+    if (!username.contains(event.target) && !contextMenu.contains(event.target)) {
+        contextMenu.classList.add('hidden');
+    }
+});
+
+// Prevent context menu from closing when clicking inside it
+document.getElementById('contextMenu').addEventListener('click', function(event) {
+    event.stopPropagation();
+});
 
 fetch(
     baseUrl + "api_category.php",

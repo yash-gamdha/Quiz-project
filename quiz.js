@@ -20,7 +20,7 @@ const options = [
     document.getElementById("option3"),
     document.getElementById("option4"),
 ]
-const finalScoreHTML = document.getElementById("final_score");
+const scoreTextHTML = document.getElementById("scoreText");
 const homeTakerHTML = document.getElementById("home_taker");
 const nextHTML = document.getElementById("next");
 
@@ -112,16 +112,51 @@ function playQuiz() {
 }
 
 function calculateScore() {
-    let score = 0
+    let score = 0;
 
     questionsFromAPI.forEach(question => {
         if (question.isCorrect) {
             score++;
         }
-    })
+    });
 
-    finalScoreHTML.innerText = score.toString();
+    const scoreCard = document.getElementById('scoreCard');
+    const scoreGauge = document.getElementById('scoreGauge');
+    const scoreText = document.getElementById('scoreText');
+
+    // Reveal the scorecard
+    scoreCard.classList.add("revealed");
     document.getElementById("result").classList.remove("hidden");
     homeTakerHTML.classList.remove("hidden");
     nextHTML.classList.add("hidden");
+
+    // Calculate score percentage
+    const scorePercent = (score / questionsFromAPI.length) * 100;
+    const roundedScorePercent = Math.round(scorePercent);
+    scoreText.textContent = `${roundedScorePercent}%`;
+
+    // Update the path for the score gauge
+    // We're using a semicircle arc from left to right
+    const radius = 65; // Radius used in the SVG path
+    const center = { x: 100, y: 100 }; // Center point of the gauge
+    const startAngle = Math.PI; // Start from left (180 degrees or π radians)
+    const maxAngle = 0; // End at right (0 degrees)
+    const totalAngle = Math.abs(startAngle - maxAngle); // Total angle of the arc
+
+    // Calculate the angle for the current score
+    const scoreAngle = startAngle - (scorePercent / 100) * totalAngle;
+
+    // Convert angle to end point coordinates
+    const endX = center.x + radius * Math.cos(scoreAngle);
+    const endY = center.y - radius * Math.sin(scoreAngle); // Subtract because SVG Y axis is inverted
+
+    // Create the arc path
+    const largeArcFlag = scorePercent > 50 ? 1 : 0;
+    const path = `M 35 100 A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`;
+
+    // Update the path
+    scoreGauge.setAttribute('d', path);
+
+    // Update the text display
+    scoreTextHTML.innerText = score.toString();
 }

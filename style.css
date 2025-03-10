@@ -2422,7 +2422,7 @@ li > p {
   padding: 8px 16px;
   transition: all 0.5s;
 }
-#custom-dialog-box {
+#custom-dialog-box, #custom-dialog-box-delete-acc {
   background-color: rgba(0,0,0,0.5);
 }
 .snap-x-mandatory {
@@ -2434,6 +2434,23 @@ li > p {
 #selected {
   transition: all 1s;
 }
+.score-gauge {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 1.5s ease;
+}
+
+.score-content {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.score-card.revealed .score-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 input[type="password"]::after {
   content: "\1F441";
   font-size: 20px;

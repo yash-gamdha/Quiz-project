@@ -151,8 +151,8 @@ logInBtn.addEventListener("click", async () => {
             logInBtn.innerHTML = "Log In";
         } else {
             if (response && response.username) {
-                // window.location.href = "./main.html";
-                window.open("https://quiz-project-js.vercel.app/main.html", "_blank");
+                window.location.href = "main.html";
+                // window.open("https://quiz-project-js.vercel.app/main.html", "_blank");
             } else {
                 showError(document.getElementById("log_in_error"), "Login failed. Please try again.");
             }

@@ -12,9 +12,9 @@ document.getElementById("dialog-close-btn-delete-acc").addEventListener("click",
 })
 
 document.addEventListener("DOMContentLoaded", () => {
-    changeFragment(1, "instant")
     const cookieValue = checkCookie("username")
     if (cookieValue !== false) {
+        changeFragment(1, "instant")
         document.getElementById("username").innerText = cookieValue;
     } else {
         window.location.href = "auth.html";
@@ -33,17 +33,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("deleteAccBtn").addEventListener("click", () => {
-        deleteAccount(cookieValue, document.getElementById("delete-acc-pw").value, (response, isError) => {
+        const deleteBtn = document.getElementById("deleteAccBtn");
+        const password = document.getElementById("delete-acc-pw").value;
+
+        deleteBtn.disabled = true;
+        deleteBtn.textContent = "Deleting...";
+
+        deleteAccount(cookieValue, password, (response, isError) => {
+            deleteBtn.disabled = false;
+            deleteBtn.textContent = "Delete Account";
+
             if (!isError) {
                 if (response.toLowerCase() === "success") {
-                    alert("Account deleted successfully")
+                    window.location.href = "auth.html";
                 } else {
-                    alert("Failed to delete account")
+                    alert("Failed to delete account");
                 }
             } else {
-                alert("Something went wrong")
+                alert("Something went wrong: " + response);
             }
-        })
+        });
     });
 })
 

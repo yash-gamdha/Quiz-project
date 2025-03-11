@@ -13,13 +13,11 @@
                 <div class="flex justify-center items-center lg:justify-between w-full max-w-screen-xl">
                     <div class="name inconsolata-bold text-5xl ms-4">Quizzz</div>
                     <span class="w-full lg:hidden"></span>
-<!--                    <div class="text-3xl w-fit whitespace-nowrap"><span class="inconsolata-normal text-right">Welcome </span><span class="inconsolata-bold text-right" id="username"></span></div>-->
-                    <!--username with context menu - center on lg, right on smaller screens-->
                     <div class="text-3xl w-fit whitespace-nowrap lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 relative">
                         <span class="inconsolata-normal">Welcome </span>
                         <span class="inconsolata-bold hover:cursor-pointer" id="username" onclick="toggleContextMenu()"></span>
 
-                        <!-- Context menu (hidden by default) -->
+                        <!-- Context menu -->
                         <div id="contextMenu" class="absolute right-0 lg:right-auto lg:left-1/2 lg:-translate-x-1/2 mt-2 w-48 bg-white rounded-lg shadow-lg z-50 hidden">
                             <ul class="py-2 text-base">
                                 <li class="px-4 py-2 hover:bg-gray-100 flex items-center cursor-pointer">

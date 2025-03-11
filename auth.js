@@ -39,14 +39,14 @@ function changeFragment(index, scrollBehavior = 'smooth') {
     }
 }
 
-signUpBtn.addEventListener("click", () => {
-    const username = document.getElementById("username")
-    const email = document.getElementById("email")
-    const password = document.getElementById("password")
-    const confirm = document.getElementById("confirm-password")
+signUpBtn.addEventListener("click", async () => {
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const confirm = document.getElementById("confirm-password");
 
     // username validation
-    let usernameRegex = /^[a-zA-Z0-9]{6,}$/
+    let usernameRegex = /^[a-zA-Z0-9]{6,}$/;
     if (username.value.trim() === "") {
         showError(document.getElementById("un_error"), "Please enter a valid username");
         username.focus();
@@ -96,23 +96,35 @@ signUpBtn.addEventListener("click", () => {
         return false;
     }
 
+    // Disable button while processing to prevent multiple submissions
+    signUpBtn.disabled = true;
+    signUpBtn.innerHTML = "Signing up...";
+
     // sign up function call
     signUp(username.value, email.value, password.value, (response, isError) => {
         if (isError) {
-            showError(document.getElementById("sign_up_error"), response.message);
+            const errorMessage = typeof response === 'object' ? response.message : response;
+            showError(document.getElementById("sign_up_error"), errorMessage);
+
+            signUpBtn.disabled = false;
+            signUpBtn.innerHTML = "Sign Up";
         } else {
-            if (response !== undefined && response != null) {
-                if (response === "success") {
+            if (response !== undefined && response !== null) {
+                if (response.trim() === "success") {
                     signUpBtn.innerHTML = "Success";
                     signUpBtn.classList.add("bg-green-400");
                     document.getElementById("sign_up_success").classList.remove("hidden");
+                } else {
+                    console.log("Unexpected success response:", response);
+                    signUpBtn.disabled = false;
+                    signUpBtn.innerHTML = "Sign Up";
                 }
             }
         }
     });
 });
 
-logInBtn.addEventListener("click", () => {
+logInBtn.addEventListener("click", async () => {
     const username = document.getElementById("log_in_un");
     const password = document.getElementById("log_in_pw");
 
@@ -128,14 +140,21 @@ logInBtn.addEventListener("click", () => {
         return false;
     }
 
+    logInBtn.disabled = true;
+    logInBtn.innerHTML = "Logging in...";
+
     // log in function call
     login(username.value, password.value, (response, isError) => {
         if (isError) {
             showError(document.getElementById("log_in_error"), "Invalid username or password");
+            logInBtn.disabled = false;
+            logInBtn.innerHTML = "Log In";
         } else {
-            if (response.username !== null) {
+            if (response && response.username) {
                 // window.location.href = "./main.html";
-                window.open("http://localhost:63342/Quiz-project/main.html", "_blank")
+                window.open("http://localhost:63342/Quiz-project/main.html", "_blank");
+            } else {
+                showError(document.getElementById("log_in_error"), "Login failed. Please try again.");
             }
         }
     });

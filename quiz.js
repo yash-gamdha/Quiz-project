@@ -1,4 +1,5 @@
 import Question from "./Question.js";
+import {getCookie} from "./authMethods.js";
 
 const baseUrl = "https://opentdb.com/api.php"
 
@@ -14,15 +15,59 @@ let correctAnswerIndex = 0;
 const categoryNameHTML = document.getElementById("category_name");
 const difficultyHTML = document.getElementById("difficulty");
 const questionHTML = document.getElementById("question");
-const options = [
+const optionsLabels = [
     document.getElementById("option1"),
     document.getElementById("option2"),
     document.getElementById("option3"),
     document.getElementById("option4"),
 ]
+
+const optionsRadios = []
+
+optionsLabels.forEach(option => {
+    optionsRadios.push(option.children[0]);
+});
+
 const scoreTextHTML = document.getElementById("scoreText");
 const homeTakerHTML = document.getElementById("home_taker");
 const nextHTML = document.getElementById("next");
+
+let countdownTimer;
+let timeLeft = 90;
+let timerDisplay = document.getElementById("timer");
+
+function startTimer() {
+    countdownTimer = setInterval(() => {
+        if (timeLeft <= 0) {
+            stopTimer();
+            currentQuestionIndex += 1;
+            playQuiz();
+        } else {
+            if (timeLeft <= 30) {
+                timerDisplay.classList.add("text-red-500")
+            }
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            timerDisplay.innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            timeLeft--;
+        }
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(countdownTimer);
+}
+
+
+$(document).ready(() => {
+    const cookieValue = getCookie("username");
+    console.log(cookieValue);
+    if (cookieValue !== "") {
+        $("#username").text(cookieValue).fadeIn(2000);
+    } else {
+        window.location.href = "auth.html";
+    }
+})
 
 homeTakerHTML.addEventListener("click", () => {
     window.location.href = "index.html";
@@ -58,6 +103,8 @@ fetch(
         )
     })
 
+    $("#loader").hide();
+    $("#questions").fadeIn(2000);
     playQuiz();
 }).catch(error => console.log(error))
 
@@ -67,47 +114,68 @@ function playQuiz() {
         return;
     }
 
-    options.forEach(option => option.children[0].checked = false)
+    timeLeft = 90;
+    startTimer(); // Restart the timer for the next question
+
+    optionsLabels.forEach(option => option.children[0].checked = false)
+    enableOptions();
 
     difficultyHTML.innerText = questionsFromAPI[currentQuestionIndex].difficulty;
     questionHTML.innerHTML = `${currentQuestionIndex + 1}. ${questionsFromAPI[currentQuestionIndex].question}`;
     categoryNameHTML.innerText = questionsFromAPI[currentQuestionIndex].category;
 
     if (questionsFromAPI[currentQuestionIndex].type === "boolean") {
-        options[2].classList.add("hidden")
-        options[3].classList.add("hidden")
+        optionsLabels[2].classList.add("hidden")
+        optionsLabels[3].classList.add("hidden")
     } else {
-        options[2].classList.remove("hidden")
-        options[3].classList.remove("hidden")
+        optionsLabels[2].classList.remove("hidden")
+        optionsLabels[3].classList.remove("hidden")
     }
 
     questionsFromAPI[currentQuestionIndex].options.forEach((option, index) => {
-        options[index].classList.remove("text-white")
-        options[index].classList.add("text-gray-700")
-        options[index].classList.remove("bg-green-400")
-        options[index].classList.remove("bg-red-400")
+        optionsLabels[index].classList.remove("text-white")
+        optionsLabels[index].classList.add("text-gray-700")
+        optionsLabels[index].classList.remove("bg-green-400")
+        optionsLabels[index].classList.remove("bg-red-400")
 
-        options[index].children[2].innerText = option;
+        optionsLabels[index].children[2].innerText = option;
 
         if (option === questionsFromAPI[currentQuestionIndex].answer) {
             correctAnswerIndex = index;
         }
 
-        options[index].addEventListener("click", () => {
-            questionsFromAPI[currentQuestionIndex].isCorrect = options[index].innerText === questionsFromAPI[currentQuestionIndex].answer;
+        optionsLabels[index].addEventListener("click", () => {
+            questionsFromAPI[currentQuestionIndex].isCorrect = optionsLabels[index].innerText === questionsFromAPI[currentQuestionIndex].answer;
 
-            options[index].classList.remove("text-gray-700")
-            options[index].classList.add("text-white")
-            options[index].children[1].classList.add("peer-checked:border-white")
+            optionsLabels[index].classList.remove("text-gray-700")
+            optionsLabels[index].classList.add("text-white")
+            optionsLabels[index].children[1].classList.add("peer-checked:border-white")
 
             if (questionsFromAPI[currentQuestionIndex].isCorrect) {
-                options[index].classList.add("bg-green-400")
+                optionsLabels[index].classList.add("bg-green-400")
             } else {
-                options[correctAnswerIndex].classList.add("bg-green-400")
-                options[correctAnswerIndex].classList.add("text-white")
-                options[index].classList.add("bg-red-400")
+                optionsLabels[correctAnswerIndex].classList.add("bg-green-400")
+                optionsLabels[correctAnswerIndex].classList.add("text-white")
+                optionsLabels[index].classList.add("bg-red-400")
             }
+
+            stopTimer();
+            disableOptions(index);
         })
+    })
+}
+
+function disableOptions(selectedOptionIndex) {
+    optionsRadios.forEach((option, index) => {
+        if (selectedOptionIndex !== index) {
+            option.disabled = true;
+        }
+    })
+}
+
+function enableOptions() {
+    optionsRadios.forEach(option => {
+        option.disabled = false;
     })
 }
 
@@ -126,7 +194,7 @@ function calculateScore() {
 
     // Reveal the scorecard
     scoreCard.classList.add("revealed");
-    document.getElementById("result").classList.remove("hidden");
+    $("#result").slideDown(3000);
     homeTakerHTML.classList.remove("hidden");
     nextHTML.classList.add("hidden");
 
@@ -136,7 +204,6 @@ function calculateScore() {
     scoreText.textContent = `${roundedScorePercent}%`;
 
     // Update the path for the score gauge
-    // We're using a semicircle arc from left to right
     const radius = 65; // Radius used in the SVG path
     const center = { x: 100, y: 100 }; // Center point of the gauge
     const startAngle = Math.PI; // Start from left (180 degrees or π radians)
@@ -154,9 +221,7 @@ function calculateScore() {
     const largeArcFlag = scorePercent > 50 ? 1 : 0;
     const path = `M 35 100 A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`;
 
-    // Update the path
     scoreGauge.setAttribute('d', path);
 
-    // Update the text display
     scoreTextHTML.innerText = score.toString();
 }

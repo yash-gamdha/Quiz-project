@@ -187,31 +187,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // log in function call
         login(username.value, password.value, (response, isError) => {
-            if (isError) {
-                showError(document.getElementById("log_in_error"), "Invalid username or password");
-                logInBtn.disabled = false;
-                logInBtn.innerHTML = "Log In";
-
-                // log in function call
-                login(username.value, password.value, (response, isError) => {
-                    if (isError) {
-                        showError(document.getElementById("log_in_error"), "Invalid username or password");
-                        logInBtn.disabled = false;
-                        logInBtn.innerHTML = "Log In";
+                if (isError) {
+                    showError(document.getElementById("log_in_error"), "Invalid username or password");
+                    logInBtn.disabled = false;
+                    logInBtn.innerHTML = "Log In";
+                } else {
+                    if (response && response.username) {
+                        window.location.href = "main.html";
                     } else {
                         if (response && response.username) {
                             window.location.href = "main.html";
                         } else {
-                            if (response && response.username) {
-                                window.location.href = "main.html";
-                            } else {
-                                showError(document.getElementById("log_in_error"), "Login failed. Please try again.");
-                            }
+                            showError(document.getElementById("log_in_error"), "Login failed. Please try again.");
                         }
                     }
-                })
+                }
             }
-        })
+        )
     })
 })
 

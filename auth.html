@@ -34,8 +34,11 @@
                         <!-- Password Field -->
                         <div class="mb-4">
                             <label for="password" class="block text-gray-700">Password</label>
-                            <div class="relative">
-                                <input type="password" placeholder="create a strong password" id="password" name="password" class="w-full relative p-2 border border-gray-300 rounded-md mt-2">
+                            <div class="flex items-center border border-gray-300 rounded-md mt-2">
+                                <input type="password" placeholder="create a strong password" id="password" name="password" class="w-full p-2 rounded-md">
+                                <svg id="pw-toggle" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-2 cursor-pointer">
+                                    <path d="M4 12C4 12 5.6 7 12 7M12 7C18.4 7 20 12 20 12M12 7V4M18 5L16 7.5M6 5L8 7.5M15 13C15 14.6569 13.6569 16 12 16C10.3431 16 9 14.6569 9 13C9 11.3431 10.3431 10 12 10C13.6569 10 15 11.3431 15 13Z" stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                             </div>
                             <p class="text-xs text-gray-500 mt-1">Password should be at least 8 characters.</p>
                             <p class="text-xs text-red-400 mt-1 hidden" id="pw_error"></p>
@@ -44,7 +47,12 @@
                         <!-- Confirm Password Field -->
                         <div class="mb-4">
                             <label for="confirm-password" class="block text-gray-700">Confirm Password</label>
-                            <input type="password" placeholder="should be same as password field" id="confirm-password" name="confirm-password" class="w-full p-2 border border-gray-300 rounded-md mt-2">
+                            <div class="flex items-center border border-gray-300 rounded-md mt-2">
+                                <input type="password" placeholder="should be same as password field" id="confirm-password" name="confirm-password" class="w-full p-2 rounded-md">
+                                <svg id="cpw-toggle" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-2 cursor-pointer">
+                                    <path d="M4 12C4 12 5.6 7 12 7M12 7C18.4 7 20 12 20 12M12 7V4M18 5L16 7.5M6 5L8 7.5M15 13C15 14.6569 13.6569 16 12 16C10.3431 16 9 14.6569 9 13C9 11.3431 10.3431 10 12 10C13.6569 10 15 11.3431 15 13Z" stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
                             <p class="text-xs text-red-400 mt-1 hidden" id="cpw_error"></p>
                         </div>
 
@@ -69,7 +77,12 @@
                         <!-- Password Field -->
                         <div class="mb-4">
                             <label for="log_in_pw" class="block text-gray-700">Password</label>
-                            <input type="password" placeholder="Enter your password" id="log_in_pw" name="password" class="w-full p-2 border border-gray-300 rounded-md mt-2">
+                            <div class="flex items-center border border-gray-300 rounded-md mt-2">
+                                <input type="password" placeholder="Enter your password" id="log_in_pw" name="password" class="w-full p-2 rounded-md">
+                                <svg id="log-pw-toggle" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-2 cursor-pointer">
+                                    <path d="M4 12C4 12 5.6 7 12 7M12 7C18.4 7 20 12 20 12M12 7V4M18 5L16 7.5M6 5L8 7.5M15 13C15 14.6569 13.6569 16 12 16C10.3431 16 9 14.6569 9 13C9 11.3431 10.3431 10 12 10C13.6569 10 15 11.3431 15 13Z" stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
                             <p class="text-base text-red-400 mt-1 text-center hidden" id="log_pw_error"></p>
                         </div>
                         <p class="text-base text-red-400 mt-1 text-center hidden" id="log_in_error"></p>
@@ -82,6 +95,7 @@
                 </span>
             </div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="./auth.js" type="module"></script>
     </body>
 </html>

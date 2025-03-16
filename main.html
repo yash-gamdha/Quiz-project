@@ -140,10 +140,15 @@
                     <span class="text-5xl">&times;</span>
                 </button>
                 <!-- Dialog content -->
-                <div class="text-center flex flex-col justify-center items-start gap-y-3">
+                <div class="text-center flex flex-col justify-center items-center gap-y-3">
                     <div>
                         <label for="delete-acc-pw">Enter Your Password to delete : </label>
-                        <input type="text" name="noOfQue" id="delete-acc-pw" class="rounded-sm placeholder:text-gray-500 focus:ring-1 focus:ring-blue-500 text-base outline-none text-gray-700 py-1 px-3 duration-200 ease-in-out" placeholder="Password">
+                        <div class="flex items-center border border-gray-300 rounded-md mt-2">
+                            <input id="delete-acc-pw" type="password" placeholder="Enter password" id="confirm-password" name="confirm-password" class="w-full p-2 rounded-md">
+                            <svg id="delete-pw-toggle" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-2 cursor-pointer">
+                                <path d="M4 12C4 12 5.6 7 12 7M12 7C18.4 7 20 12 20 12M12 7V4M18 5L16 7.5M6 5L8 7.5M15 13C15 14.6569 13.6569 16 12 16C10.3431 16 9 14.6569 9 13C9 11.3431 10.3431 10 12 10C13.6569 10 15 11.3431 15 13Z" stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
                     </div>
                     <div class="flex flex-row justify-center items-center w-full">
                         <button id="deleteAccBtn" class="w-fit bg-red-500 hover:bg-red-700 text-white inconsolata-normal text-2xl py-2 px-4 rounded cursor-pointer">Delete Account</button>
@@ -151,6 +156,7 @@
                 </div>
             </div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="./script.js" type="module"></script>
         <script>
             function toggleContextMenu() {

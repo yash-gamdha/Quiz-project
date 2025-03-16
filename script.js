@@ -13,8 +13,8 @@ document.getElementById("dialog-close-btn-delete-acc").addEventListener("click",
 
 document.addEventListener("DOMContentLoaded", () => {
     const cookieValue = checkCookie("username")
+    changeFragment(1, "instant")
     if (cookieValue !== false) {
-        changeFragment(1, "instant")
         document.getElementById("username").innerText = cookieValue;
     } else {
         window.location.href = "auth.html";
@@ -54,10 +54,23 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-})
+});
+
+$(document).ready(() => {
+    $("#delete-pw-toggle").click(() => {
+        const dpwHtml = $("#delete-acc-pw");
+        if (dpwHtml.attr("type") === "password") {
+            dpwHtml.attr("type", "text");
+            $("#pw-toggle").children("path").attr("d", closedEyePath);
+        } else {
+            dpwHtml.attr("type", "password");
+            $("#pw-toggle").children("path").attr("d", openEyePath);
+        }
+    });
+});
 
 const categories = document.querySelector(".categories")
-const catNotSelected =document.getElementById("category-not-selected")
+const catNotSelected = document.getElementById("category-not-selected")
 let tabIndex = 4
 let selectedCategory = null
 let selectedCategoryId = null
@@ -101,21 +114,6 @@ function toggleContextMenu() {
     contextMenu.classList.toggle('hidden');
 }
 
-// Close context menu when clicking outside
-document.addEventListener('click', function(event) {
-    const username = document.getElementById('username');
-    const contextMenu = document.getElementById('contextMenu');
-
-    if (!username.contains(event.target) && !contextMenu.contains(event.target)) {
-        contextMenu.classList.add('hidden');
-    }
-});
-
-// Prevent context menu from closing when clicking inside it
-document.getElementById('contextMenu').addEventListener('click', function(event) {
-    event.stopPropagation();
-});
-
 fetch(
     baseUrl + "api_category.php",
     {
@@ -131,7 +129,7 @@ fetch(
         const categoryLabel = document.createElement("label")
         categoryLabel.setAttribute("tabindex", `${tabIndex++}`)
         categoryLabel.onfocus = () => {
-            categoryLabel.classList.add("shadow-2xl","hover:bg-black","hover:text-white")
+            categoryLabel.classList.add("shadow-2xl", "hover:bg-black", "hover:text-white")
         }
         categoryLabel.onblur = () => {
             categoryLabel.classList.remove("shadow-2xl")
@@ -147,12 +145,12 @@ fetch(
 
         categoryLabel.addEventListener("click", () => {
             if (selectedCategory != null) {
-                selectedCategory.classList.remove("shadow-2xl", "bg-black","text-white", "shadow-black")
+                selectedCategory.classList.remove("shadow-2xl", "bg-black", "text-white", "shadow-black")
             }
             selectedCategory = categoryLabel
             selectedCategoryId = category.id
             selectedCategoryName = categoryLabel.innerText
-            selectedCategory.classList.add("shadow-2xl", "bg-black","text-white", "shadow-black")
+            selectedCategory.classList.add("shadow-2xl", "bg-black", "text-white", "shadow-black")
             catNotSelected.classList.add("hidden")
         })
 

@@ -32,7 +32,6 @@ async function signUp(username, email, password, callback) {
 }
 
 async function login(username, password, callback) {
-    console.log("hello from logIn");
     const url = "https://simpleauthproject-production.up.railway.app/api/login";
 
     const body = {
@@ -51,16 +50,13 @@ async function login(username, password, callback) {
 
         if (response.status === 200) {
             const data = await response.json();  // Parse the JSON
-            console.log("Login successful:", data);
             setCookie("username", data.username, 30);
             callback(data, false);
         } else {
             const errResponse = await response.json();
-            console.log("Login error:", errResponse);
             callback(errResponse, true);
         }
     } catch (error) {
-        console.error("Login exception:", error);
         callback({ message: error.message }, true);
     }
 }
@@ -87,16 +83,13 @@ async function deleteAccount(username, password, callback) {
 
         if (response.status === 200) {
             const textResponse = await response.text();
-            console.log("Delete account successful:", textResponse);
             deleteCookie("username");
             callback(textResponse, false);
         } else {
             const errorResponse = await response.text();
-            console.log("Delete account failed:", errorResponse);
             callback(errorResponse, true);
         }
     } catch (error) {
-        console.error("Delete account exception:", error);
         callback(error.message, true);
     }
 }

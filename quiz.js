@@ -61,7 +61,6 @@ function stopTimer() {
 
 $(document).ready(() => {
     const cookieValue = getCookie("username");
-    console.log(cookieValue);
     if (cookieValue !== "") {
         $("#username").text(cookieValue).fadeIn(2000);
     } else {

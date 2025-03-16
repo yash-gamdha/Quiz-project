@@ -204,8 +204,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             // window.open("https://quiz-project-js.vercel.app/main.html", "_blank");
                         } else {
                             if (response && response.username) {
-                                // window.location.href = "./main.html";
-                                window.open("http://localhost:63342/Quiz-project/main.html", "_blank");
+                                window.location.href = "./main.html";
+                                // window.open("http://localhost:63342/Quiz-project/main.html", "_blank");
                             } else {
                                 showError(document.getElementById("log_in_error"), "Login failed. Please try again.");
                             }
